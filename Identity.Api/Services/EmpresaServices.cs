@@ -1,6 +1,7 @@
 ﻿using Identity.Api.DataRepository;
 using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using Modelo.laconcordia.Modelo.Database;
 
 namespace Identity.Api.Services
@@ -34,5 +35,14 @@ namespace Identity.Api.Services
         {
             _empresa.DeleteEmpresaByRuc(ruc);
         }
+
+        //paginado
+        // Servicio EmpresaService
+        public async Task<PagedResult<Empresa>> GetEmpresasPaginados(int pagina, int pageSize, string? ruc = null, string? razonsocial = null, string? telefono = null, string? estado = null)
+        {
+            return await _empresa.GetEmpresasPaginados(pagina, pageSize, ruc, razonsocial, telefono, estado);
+        }
+
+
     }
 }

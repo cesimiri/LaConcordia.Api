@@ -1,4 +1,5 @@
 ﻿using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -73,5 +74,26 @@ namespace Identity.Api.Controllers
             }
 
         }
+        //paginado  
+        [HttpGet("GetEmpresasPaginados")]
+        public async Task<IActionResult> GetEmpresasPaginados(
+            int pagina = 1,
+            int pageSize = PaginadorHelper.NumeroDeDatosPorPagina,
+            string? ruc = null,
+            string? razonsocial = null,
+            string? telefono = null,
+            string? estado = null)
+        {
+            try
+            {
+                var resultado = await _empresa.GetEmpresasPaginados(pagina, pageSize, ruc, razonsocial, telefono, estado);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
     }
 }
